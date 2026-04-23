@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💗</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #fff7f9, #ffe4ec, #fcecff);
+  background-size: 300% 300%;
+  animation: gradientMove 12s ease infinite;
+  color: #444;
+}
+
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* GLOW */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255,182,193,0.25);
+  filter: blur(80px);
+  z-index: 0;
+}
+body::before { top: -40px; left: -40px; }
+body::after { bottom: -40px; right: -40px; }
+
+/* LOADER */
+.loader {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: #fff7f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  transition: opacity 0.8s ease;
+}
+
+.loader h2 {
+  color: #ff6f91;
+  animation: fade 1.5s infinite;
+}
+
+@keyframes fade {
+  0%,100% {opacity: 0.3;}
+  50% {opacity: 1;}
+}
+
+/* MAIN */
+.container {
+  min-height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1.2s ease;
+}
+
+.container.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CARD */
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 25px 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* FADE TEXT */
+.fade-text {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 1.2s ease;
+}
+
+.fade-text.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+  color: #ff6f91;
+}
+
+img {
+  width: 100%;
+  max-width: 220px;
+  border-radius: 20px;
+  margin: 15px auto;
+}
+
+/* TEXT */
+p {
+  line-height: 1.9;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.highlight {
+  color: #ff6f91;
+  font-weight: 600;
+}
+
+/* VIDEO */
+.video-wrapper {
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1.5s ease;
+  position: relative;
+}
+
+.video-wrapper.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+video {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* PLAY BTN */
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,111,145,0.9);
+  border-radius: 50%;
+  padding: 12px 14px;
+  color: white;
+  cursor: pointer;
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.controls button {
+  border: none;
+  background: #ff6f91;
+  color: white;
+  border-radius: 50%;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.progress {
+  flex: 1;
+  height: 5px;
+  background: #eee;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #ff6f91;
+  border-radius: 10px;
+}
+
+.time {
+  font-size: 10px;
+  min-width: 70px;
+}
+
+/* FULLSCREEN */
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullscreen video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* HEARTS */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  color: #ff6f91;
+  opacity: 0.7;
+  animation: float linear forwards;
+}
+
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="loader" id="loader">
+  <h2>opening something special… 💗</h2>
+</div>
+
+<div class="container" id="main">
+  <div class="card">
+
+    <h1 class="fade-text">Happy Birthday 💗</h1>
+
+    <img src="photo.jpg" onerror="this.src='https://via.placeholder.com/220'">
+
+    <p class="fade-text">
+    You’re not the easiest person to understand, and honestly, that’s part of what makes you interesting.<br><br>
+
+    You’re strong minded, confident, and you carry yourself in a way that doesn’t try to please anyone. You say what you think, you stand by it, and you don’t bend just to fit in — and that takes a kind of boldness most people don’t have.<br><br>
+
+    At the same time, there’s more to you than what you show on the surface. You think deeply, you notice things others don’t, and even when you act distant, there’s still a part of you that feels a lot more than you let people see.<br><br>
+
+    I don’t think you realize how much impact you leave on people just by being yourself. You’re not “perfect,” but you’re real — and that’s rare.<br><br>
+
+    I’m glad I got to know you. I hope this year brings you everything you’re working towards, and maybe even the kind of peace you don’t always admit you want.<br><br>
+
+    <span class="highlight">Happy Birthday 💗</span>
+    </p>
+
+    <div class="video-wrapper" id="videoBlock">
+      <video id="vid" muted loop>
+        <source src="video.mp4" type="video/mp4">
+      </video>
+
+      <div class="play-btn" id="playBtn">▶</div>
+
+      <div class="controls">
+        <button id="pauseBtn">⏸</button>
+
+        <div class="progress" id="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <span class="time" id="time">0:00 / 0:00</span>
+
+        <button id="muteBtn">🔇</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="fsContainer" style="display:none;">
+  <div class="close-btn" onclick="exitFullscreen()">✕</div>
+</div>
+
+<script>
+// LOADER (unchanged)
+setTimeout(() => {
+  loader.style.opacity = "0";
+  setTimeout(() => {
+    loader.style.display = "none";
+    main.style.display = "flex";
+
+    setTimeout(() => {
+      main.classList.add("show");
+
+      const fades = document.querySelectorAll('.fade-text');
+      fades.forEach((el, i) => {
+        setTimeout(() => el.classList.add("show"), i * 400);
+      });
+
+      setTimeout(() => {
+        videoBlock.classList.add("show");
+      }, fades.length * 400 + 600);
+
+    }, 100);
+  }, 800);
+}, 2000);
+
+// HEARTS (unchanged)
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💗";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (8 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 9000);
+}, 1600);
+
+// VIDEO UPGRADE ONLY
+const video = document.getElementById("vid");
+const playBtn = document.getElementById("playBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const muteBtn = document.getElementById("muteBtn");
+const progress = document.getElementById("progress");
+const progressBar = document.getElementById("progressBar");
+const time = document.getElementById("time");
+const fsContainer = document.getElementById("fsContainer");
+const videoBlock = document.getElementById("videoBlock");
+
+let startY = 0;
+let isDragging = false;
+
+playBtn.onclick = () => {
+  video.play();
+  video.muted = false;
+  playBtn.style.display = "none";
+};
+
+pauseBtn.onclick = () => {
+  if(video.paused){
+    video.play();
+    pauseBtn.innerText = "⏸";
+  } else {
+    video.pause();
+    pauseBtn.innerText = "▶";
+  }
+};
+
+video.onclick = () => {
+  if(video.paused){
+    video.play();
+    pauseBtn.innerText = "⏸";
+  } else {
+    video.pause();
+    pauseBtn.innerText = "▶";
+  }
+};
+
+muteBtn.onclick = () => {
+  video.muted = !video.muted;
+  muteBtn.innerText = video.muted ? "🔇" : "🔊";
+};
+
+function formatTime(t){
+  let m = Math.floor(t/60);
+  let s = Math.floor(t%60);
+  if(s<10) s="0"+s;
+  return m+":"+s;
+}
+
+video.addEventListener("timeupdate", () => {
+  if(!video.duration) return;
+  let percent = (video.currentTime / video.duration) * 100;
+  progressBar.style.width = percent + "%";
+  time.innerText = formatTime(video.currentTime) + " / " + formatTime(video.duration);
+});
+
+progress.onclick = (e) => {
+  const rect = progress.getBoundingClientRect();
+  const pos = (e.clientX - rect.left) / rect.width;
+  video.currentTime = pos * video.duration;
+};
+
+progress.addEventListener("mousedown", () => isDragging = true);
+window.addEventListener("mouseup", () => isDragging = false);
+
+window.addEventListener("mousemove", (e) => {
+  if(!isDragging) return;
+  const rect = progress.getBoundingClientRect();
+  let pos = (e.clientX - rect.left) / rect.width;
+  pos = Math.max(0, Math.min(1, pos));
+  video.currentTime = pos * video.duration;
+});
+
+video.addEventListener("touchstart", e => {
+  startY = e.touches[0].clientY;
+});
+
+video.addEventListener("touchend", e => {
+  let endY = e.changedTouches[0].clientY;
+  if (startY - endY > 60) openFullscreen();
+  else if (endY - startY > 60) exitFullscreen();
+});
+
+function openFullscreen() {
+  fsContainer.style.display = "flex";
+  fsContainer.classList.add("fullscreen");
+  fsContainer.appendChild(video);
+}
+
+function exitFullscreen() {
+  videoBlock.appendChild(video);
+  fsContainer.style.display = "none";
+}
+</script>
+
+</body>
+</html>
